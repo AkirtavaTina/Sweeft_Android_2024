@@ -1,0 +1,30 @@
+
+import java.util.ArrayList;
+
+public class Solution {
+
+    public static int subsets(int arr[], int n, ArrayList<Integer> list, int amount) {
+        if (amount == 0) return list.size();
+        if (amount < 0 || n == 0)  return Integer.MAX_VALUE;
+        
+        int num1 = subsets(arr, n - 1, list, amount);
+        list.add(arr[n - 1]);
+        int num2 = subsets(arr, n, list, amount - arr[n - 1]);
+        list.remove(list.size() - 1);
+
+        return Math.min(num1, num2);
+    }
+
+	public static int minSplit(int amount) {
+        int arr[] = {1, 5, 10, 20, 50};
+		ArrayList<Integer> list = new ArrayList<>();
+        return subsets(arr, arr.length, list, amount);
+    }
+    
+      public static void main(String[] args) {
+        int amount = 50;
+        System.out.println(minSplit(amount)); //1
+    }
+    
+}
+
