@@ -1,0 +1,85 @@
+
+class Node {
+    int key;
+    int value;
+    Node prev;
+    Node next;
+
+    public Node(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+
+class MyStructure {
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public MyStructure() {
+        head = new Node(-1, -1); 
+        tail = new Node(-1, -1); 
+        head.next = tail;
+        tail.prev = head;
+        size = 0;
+    }
+
+    public void add(int key, int value) {
+        if (!contains(key)) {
+            Node newNode = new Node(key, value);
+            newNode.prev = tail.prev;
+            newNode.next = tail;
+            tail.prev.next = newNode;
+            tail.prev = newNode;
+            size++;
+        }
+    }
+
+    public void remove(int key) {
+        Node current = head.next;
+        while (current != tail) {
+            if (current.key == key) {
+                current.prev.next = current.next;
+                current.next.prev = current.prev;
+                size--;
+                return;
+            }
+            current = current.next;
+        }
+    }
+
+    public boolean contains(int key) {
+        Node current = head.next;
+        while (current != tail) {
+            if (current.key == key) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+    
+    private void printList() {
+        Node current = head.next;
+        while (current != tail) {
+            System.out.println("Key: " + current.key + " Value: " + current.value);
+            current = current.next;
+        }
+    }
+
+	public static void main(String[] args) {
+        MyStructure dataStructure = new MyStructure();
+        dataStructure.add(1, 10);
+        dataStructure.add(2, 20);
+        dataStructure.add(3, 30);
+
+        System.out.println("Before deletion:");
+        dataStructure.printList();
+
+        dataStructure.remove(2);
+
+        System.out.println("\nAfter deletion of key 2:");
+        dataStructure.printList();
+    }
+
+}
