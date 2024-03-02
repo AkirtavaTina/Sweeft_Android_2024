@@ -1,0 +1,19 @@
+import java.util.HashMap;
+
+class Solution {
+    public static int singleNumber(int[] nums) {
+        HashMap<Integer, Integer>numbers = new HashMap<>();
+        for (int num : nums) {
+            numbers.put(num, numbers.getOrDefault(num, 0) + 1);
+        }
+        for(Integer k : numbers.keySet()){
+            if(numbers.get(k) == 1) return k;
+        }
+        return -1;
+    }
+
+	 public static void main(String[] args) {
+		int[] nums = {5, 6, 7, 7, 6};
+        System.out.println(singleNumber(nums)); //5
+    }
+}
